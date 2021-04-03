@@ -46,13 +46,17 @@ class RNSoundLevelModule extends ReactContextBaseJavaModule {
 
     recorder = new MediaRecorder();
     try {
-      recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+      //recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+      recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
       recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+      recorder.setAudioChannels(1);
+      //recorder.setOutputFile(this.getReactApplicationContext().getCacheDir().getAbsolutePath() + "/soundlevel");
+      recorder.setOutputFile(reactContext.getCacheDir().getAbsolutePath() + "/soundlevel");
+      recorder.setAudioEncodingBitRate(32000);
       recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
       recorder.setAudioSamplingRate(22050);
-      recorder.setAudioChannels(1);
-      recorder.setAudioEncodingBitRate(32000);
-      recorder.setOutputFile(this.getReactApplicationContext().getCacheDir().getAbsolutePath() + "/soundlevel");
+      
+      
     }
     catch(final Exception e) {
       logAndRejectPromise(promise, "COULDNT_CONFIGURE_MEDIA_RECORDER" , "Make sure you've added RECORD_AUDIO permission to your AndroidManifest.xml file " + e.getMessage());
@@ -65,7 +69,12 @@ class RNSoundLevelModule extends ReactContextBaseJavaModule {
       logAndRejectPromise(promise, "COULDNT_PREPARE_RECORDING", e.getMessage());
     }
 
-    recorder.start();
+    try {
+      recorder.start();
+    } catch (final Exception e) {
+      logAndRejectPromise(promise, "COULDNT_START_RECORDING", e.getMessage());
+    }
+    //recorder.start();
 
     frameId = 0;
     isRecording = true;
