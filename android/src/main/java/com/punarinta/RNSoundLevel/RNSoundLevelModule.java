@@ -48,12 +48,14 @@ class RNSoundLevelModule extends ReactContextBaseJavaModule {
     try {
       //recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-      recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+      //recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+      recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
       recorder.setAudioChannels(1);
       //recorder.setOutputFile(this.getReactApplicationContext().getCacheDir().getAbsolutePath() + "/soundlevel");
       recorder.setOutputFile(this.getReactApplicationContext().getCacheDir().getAbsolutePath() + "/soundlevel");
       recorder.setAudioEncodingBitRate(32000);
-      recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+      //recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+      recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
       recorder.setAudioSamplingRate(22050);
       
       
